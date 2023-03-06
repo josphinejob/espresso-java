@@ -20,7 +20,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-public class LoginPageTest {
+public class LoginPageFieldValidation {
     private static final String loginPageTitle = "Espresso-LoginApp";
     private static final String validEmail = "user" + System.currentTimeMillis() + "@test.com";
     int loginButtonId = R.id.login;
@@ -29,18 +29,15 @@ public class LoginPageTest {
     public ActivityScenarioRule<LoginActivity> activityTestRule = new ActivityScenarioRule<>(LoginActivity.class);
 
     @Test
-    public void verifyLoginPageUI() {
-        onView(withText(loginPageTitle)).check(matches(isDisplayed()));
-        onView(withId(R.id.username)).check(matches(isDisplayed()));
-        onView(withId(R.id.password)).check(matches(isDisplayed()));
-        onView(withId(loginButtonId)).check(matches(isDisplayed()));
+    public void verifyLoginButtonDisabledWhenUsernameIsEmpty() {
+        onView(withId(R.id.password)).perform(typeText("password"), closeSoftKeyboard());
+        onView(withId(loginButtonId)).check(matches(isNotEnabled()));
     }
 
     @Test
-    public void verifyValidLogin() {
-        onView(withText(loginPageTitle)).check(matches(isDisplayed()));
+    public void verifyLoginButtonDisabledWhenPasswordIsInvalid() {
         onView(withId(R.id.username)).perform(typeText(validEmail));
-        onView(withId(R.id.password)).perform(typeText("password"), closeSoftKeyboard());
-        onView(withId(loginButtonId)).perform(click());
+        onView(withId(R.id.password)).perform(typeText("pass"), closeSoftKeyboard());
+        onView(withId(loginButtonId)).check(matches(isNotEnabled()));
     }
 }
