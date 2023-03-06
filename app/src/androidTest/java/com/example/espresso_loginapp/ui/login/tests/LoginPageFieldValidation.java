@@ -1,3 +1,4 @@
+// simple tests without using Page Object Model
 package com.example.espresso_loginapp.ui.login.tests;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -23,7 +24,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class LoginPageFieldValidation {
-    private static final String loginPageTitle = "Espresso-LoginApp";
     private static final String validEmail = "user" + System.currentTimeMillis() + "@test.com";
     int loginButtonId = R.id.login;
 

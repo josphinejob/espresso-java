@@ -1,3 +1,4 @@
+// Tests using Page Object model
 package com.example.espresso_loginapp.ui.login.tests;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
