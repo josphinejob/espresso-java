@@ -1,5 +1,4 @@
 package com.example.espresso_loginapp.ui.login.suites;
-import com.example.espresso_loginapp.ui.login.tests.LoginPageFieldValidation;
 import com.example.espresso_loginapp.ui.login.tests.LoginPageTest;
 
 import org.junit.runner.*;

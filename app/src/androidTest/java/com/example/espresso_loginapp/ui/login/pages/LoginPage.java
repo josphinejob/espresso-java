@@ -8,6 +8,7 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isNotEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
@@ -15,6 +16,7 @@ public class LoginPage {
     private static final String loginPageTitle = "Espresso-LoginApp";
     private static final String validEmail = "user" + System.currentTimeMillis() + "@test.com";
     int loginButtonId = R.id.login;
+    int passwordId = R.id.password;
 
     public LoginPage verifyLoginPageTitleDisplayed() {
         onView(withText(loginPageTitle)).check(matches(isDisplayed()));
@@ -48,4 +50,9 @@ public class LoginPage {
     public void tapLoginButton() {
         onView(withId(loginButtonId)).perform(click());
     }
+
+    public void verifyLoginButtonNotEnabled() {
+        onView(withId(loginButtonId)).check(matches(isNotEnabled()));
+    }
+
 }
