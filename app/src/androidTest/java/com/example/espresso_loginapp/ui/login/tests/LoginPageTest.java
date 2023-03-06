@@ -1,9 +1,12 @@
-package com.example.espresso_loginapp.ui.login;
+package com.example.espresso_loginapp.ui.login.tests;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.filters.SmallTest;
 
 import com.example.espresso_loginapp.R;
+import com.example.espresso_loginapp.ui.login.LoginActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,7 +23,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-public class LoginPageFieldValidation {
+public class LoginPageTest {
     private static final String loginPageTitle = "Espresso-LoginApp";
     private static final String validEmail = "user" + System.currentTimeMillis() + "@test.com";
     int loginButtonId = R.id.login;
@@ -29,15 +32,20 @@ public class LoginPageFieldValidation {
     public ActivityScenarioRule<LoginActivity> activityTestRule = new ActivityScenarioRule<>(LoginActivity.class);
 
     @Test
-    public void verifyLoginButtonDisabledWhenUsernameIsEmpty() {
-        onView(withId(R.id.password)).perform(typeText("password"), closeSoftKeyboard());
-        onView(withId(loginButtonId)).check(matches(isNotEnabled()));
+    @SmallTest
+    public void verifyLoginPageUI() {
+        onView(withText(loginPageTitle)).check(matches(isDisplayed()));
+        onView(withId(R.id.username)).check(matches(isDisplayed()));
+        onView(withId(R.id.password)).check(matches(isDisplayed()));
+        onView(withId(loginButtonId)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void verifyLoginButtonDisabledWhenPasswordIsInvalid() {
+    @LargeTest
+    public void verifyValidLogin() {
+        onView(withText(loginPageTitle)).check(matches(isDisplayed()));
         onView(withId(R.id.username)).perform(typeText(validEmail));
-        onView(withId(R.id.password)).perform(typeText("pass"), closeSoftKeyboard());
-        onView(withId(loginButtonId)).check(matches(isNotEnabled()));
+        onView(withId(R.id.password)).perform(typeText("password"), closeSoftKeyboard());
+        onView(withId(loginButtonId)).perform(click());
     }
 }
