@@ -1,6 +1,9 @@
 package com.example.espresso_loginapp.ui.login.pages;
 
 import com.example.espresso_loginapp.R;
+import com.example.espresso_loginapp.ui.login.pages.helpers.ConfigReaderPage;
+
+import java.io.IOException;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -13,10 +16,12 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class LoginPage {
+    ConfigReaderPage configPage = new ConfigReaderPage();
     private static final String loginPageTitle = "Espresso-LoginApp";
     private static final String validEmail = "user" + System.currentTimeMillis() + "@test.com";
     int loginButtonId = R.id.login;
     int passwordId = R.id.password;
+    int userNameId = R.id.username;
 
     public LoginPage verifyLoginPageTitleDisplayed() {
         onView(withText(loginPageTitle)).check(matches(isDisplayed()));
@@ -24,12 +29,12 @@ public class LoginPage {
     }
 
     public LoginPage verifyUserNameFieldDisplayed() {
-        onView(withId(R.id.username)).check(matches(isDisplayed()));
+        onView(withId(userNameId)).check(matches(isDisplayed()));
         return this;
     }
 
     public LoginPage verifyPasswordFieldDisplayed() {
-        onView(withId(R.id.password)).check(matches(isDisplayed()));
+        onView(withId(passwordId)).check(matches(isDisplayed()));
         onView(withId(loginButtonId)).check(matches(isDisplayed()));
         return this;
     }
@@ -40,7 +45,7 @@ public class LoginPage {
     }
 
     public void typeValidEmail() {
-        onView(withId(R.id.username)).perform(typeText(validEmail));
+        onView(withId(userNameId)).perform(typeText(validEmail));
     }
 
     public void typePassword() {
@@ -55,4 +60,11 @@ public class LoginPage {
         onView(withId(loginButtonId)).check(matches(isNotEnabled()));
     }
 
+    public void inputPassword(String configItemName) throws IOException {
+        onView(withId(passwordId)).perform(typeText(configPage.getPropertyFromConfigFile(configItemName)), closeSoftKeyboard());
+    }
+
+    public void inputEmail(String configItemName) throws IOException {
+        onView(withId(userNameId)).perform(typeText(configPage.getPropertyFromConfigFile(configItemName)), closeSoftKeyboard());
+    }
 }
